@@ -127,11 +127,11 @@ export default function Historico() {
           <table className="table w-full">
             <thead className="text-gray-700 dark:text-gray-300">
               <tr>
-                <th className="p-4 text-left">Nome</th>
-                <th className="p-4 text-left">Responsável</th>
-                <th className="p-4 text-left">Data Finalização</th>
-                <th className="p-4 text-left">Resumo</th>
-                <th className="p-4 text-left">Ações</th>
+                <th className="p-4 text-center">Nome</th>
+                <th className="p-4 text-center">Responsável</th>
+                <th className="p-4 text-center">Data Finalização</th>
+                <th className="p-4 text-center">Resumo</th>
+                <th className="p-4 text-center">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -144,10 +144,10 @@ export default function Historico() {
                   const summary = calculateSummary(inv.result_data);
                   return (
                     <tr key={inv.id} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                      <td className="p-4 font-medium">{inv.name}</td>
-                      <td className="p-4">{inv.responsible}</td>
-                      <td className="p-4">{new Date(inv.finished_at).toLocaleString('pt-BR')}</td>
-                      <td className="p-4 text-sm">
+                      <td className="p-4 font-medium text-center">{inv.name}</td>
+                      <td className="p-4 text-center">{inv.responsible}</td>
+                      <td className="p-4 text-center">{new Date(inv.finished_at).toLocaleString('pt-BR')}</td>
+                      <td className="p-4 text-sm text-center">
                         {/* **Exibindo o novo formato de resumo** */}
                         <p>Itens: {summary.totalItens}</p>
                         <p className="text-green-500 font-semibold">
@@ -157,8 +157,8 @@ export default function Historico() {
                           Faltas: {summary.totalFaltas} | {summary.faltasValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                         </p>
                       </td>
-                      <td className="p-4">
-                        <button onClick={() => handleDownloadResult(inv.result_data, inv.id)} className="btn btn-sm btn-outline cursor-pointer hover:text-blue-400 transition-colors duration-200">
+                      <td className="flex items-center justify-center space-x-2 p-4">
+                        <button onClick={() => handleDownloadResult(inv.result_data, inv.id)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors duration-200 cursor-pointer">
                           Baixar Relatório
                         </button>
                       </td>
