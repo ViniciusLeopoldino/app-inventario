@@ -11,43 +11,39 @@ const initialState = {
 function SubmitButton() {
   const { pending } = useFormStatus()
   return (
-    <button type="submit" aria-disabled={pending} className="btn btn-primary w-full text-white">
-      {pending ? (
-        <>
-          <span className="loading loading-spinner loading-sm"></span>
-          Cadastrando...
-        </>
-      ) : (
-        'Cadastrar Usuário'
-      )}
+    <button 
+      type="submit" 
+      aria-disabled={pending} 
+      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer w-full disabled:opacity-50"
+    >
+      {pending ? 'Cadastrando...' : 'Cadastrar Usuário'}
     </button>
   )
 }
 
-// O componente agora recebe 'onClose' para poder ser fechado
 export default function CreateUserForm({ onClose }) {
   const [state, formAction] = useActionState(createUser, initialState)
 
-  // Efeito para fechar o modal e limpar o formulário após o sucesso
   useEffect(() => {
     if (state?.message === 'Usuário criado com sucesso!') {
       setTimeout(() => {
         onClose();
-      }, 1500); // Fecha após 1.5 segundos
+      }, 1500);
     }
   }, [state, onClose]);
 
   return (
-    // Estrutura de modal idêntica à do EditUserModal
     <div 
-      className="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-gray-900 bg-opacity-75 z-40 flex items-center justify-center p-4"
       aria-labelledby="create-modal-title"
       role="dialog"
       aria-modal="true"
     >
       <div className="absolute inset-0" onClick={onClose}></div>
       <div className="relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8">
-        <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <button onClick={onClose} className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
         
         <h3 id="create-modal-title" className="font-bold text-xl dark:text-white">Cadastrar Novo Usuário</h3>
         <p className="py-2 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 mb-6">
@@ -57,15 +53,33 @@ export default function CreateUserForm({ onClose }) {
         <form action={formAction} className="space-y-4">
           <div>
             <label htmlFor="full_name_create" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome Completo</label>
-            <input id="full_name_create" name="full_name" type="text" required className="input input-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600" />
+            <input 
+              id="full_name_create" 
+              name="full_name" 
+              type="text" 
+              required 
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+            />
           </div>
           <div>
             <label htmlFor="email_create" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-            <input id="email_create" name="email" type="email" required className="input input-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600" />
+            <input 
+              id="email_create" 
+              name="email" 
+              type="email" 
+              required 
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+            />
           </div>
           <div>
             <label htmlFor="role_create" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Perfil de Acesso</label>
-            <select id="role_create" name="role" required defaultValue="operacional" className="select select-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600">
+            <select 
+              id="role_create" 
+              name="role" 
+              required 
+              defaultValue="operacional" 
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+            >
               <option value="operacional">Operacional</option>
               <option value="administrador">Administrador</option>
             </select>
@@ -86,4 +100,3 @@ export default function CreateUserForm({ onClose }) {
     </div>
   )
 }
-

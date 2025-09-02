@@ -54,7 +54,7 @@ export default function InventariosEmAndamento() {
                 </p>
               </div>
               <Link href={`/inventario/contagem/${inv.id}`} className="mt-4">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
+                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer">
                   Retomar Contagem
                 </button>
               </Link>

@@ -1,7 +1,5 @@
-// app/(main)/gerenciamento/usuarios/_components/EditUserModal.js
 'use client'
 
-// AQUI ESTÁ A CORREÇÃO: Importamos cada hook da sua fonte correta.
 import { useActionState, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { updateUserProfile } from '@/actions'
@@ -13,15 +11,12 @@ const initialState = {
 function SubmitButton() {
   const { pending } = useFormStatus()
   return (
-    <button type="submit" aria-disabled={pending} className="btn btn-primary text-white">
-      {pending ? (
-        <>
-          <span className="loading loading-spinner loading-sm"></span>
-          Salvando...
-        </>
-      ) : (
-        'Salvar Alterações'
-      )}
+    <button 
+      type="submit" 
+      aria-disabled={pending} 
+      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer disabled:opacity-50"
+    >
+      {pending ? 'Salvando...' : 'Salvar Alterações'}
     </button>
   )
 }
@@ -38,17 +33,15 @@ export default function EditUserModal({ user, onClose }) {
   }, [state, onClose])
 
   return (
-    <div 
-      className="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 flex items-center justify-center p-4"
-      aria-labelledby="modal-title"
-      role="dialog"
-      aria-modal="true"
-    >
+    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 z-40 flex items-center justify-center p-4">
       <div className="absolute inset-0" onClick={onClose}></div>
+
       <div className="relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8">
-        <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <button onClick={onClose} className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
         
-        <h3 id="modal-title" className="font-bold text-xl dark:text-white">Editar Usuário</h3>
+        <h3 className="font-bold text-xl dark:text-white">Editar Usuário</h3>
         <p className="py-2 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 mb-6">
           {user.email}
         </p>
@@ -64,7 +57,7 @@ export default function EditUserModal({ user, onClose }) {
               type="text"
               required
               defaultValue={user.full_name}
-              className="input input-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600"
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -75,7 +68,7 @@ export default function EditUserModal({ user, onClose }) {
               name="role" 
               required 
               defaultValue={user.role}
-              className="select select-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600"
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
             >
               <option value="operacional">Operacional</option>
               <option value="administrador">Administrador</option>
@@ -90,7 +83,9 @@ export default function EditUserModal({ user, onClose }) {
           )}
 
           <div className="flex justify-end items-center space-x-4 pt-4">
-            <button type="button" onClick={onClose} className="btn btn-ghost">Cancelar</button>
+            <button type="button" onClick={onClose} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500">
+              Cancelar
+            </button>
             <SubmitButton />
           </div>
         </form>

@@ -46,15 +46,15 @@ export default function UserListAndForm({ users }) {
         </div>
 
         <div className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">Usuários Cadastrados</h2>
+          <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Usuários Cadastrados</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead className="text-gray-700 dark:text-gray-300">
                 <tr className="border-b dark:border-gray-700">
-                  <th className="p-4">Nome Completo</th>
-                  <th className="p-4">Email</th>
-                  <th className="p-4">Perfil</th>
-                  <th className="p-4">Ações</th>
+                  <th className="p-4 text-center">Nome Completo</th>
+                  <th className="p-4 text-center">Email</th>
+                  <th className="p-4 text-center">Perfil</th>
+                  <th className="p-4 text-center">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,9 +63,9 @@ export default function UserListAndForm({ users }) {
                     key={user.id}
                     className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 border-b dark:border-gray-700"
                   >
-                    <td className="font-medium p-4">{user.full_name}</td>
-                    <td className="p-4">{user.email}</td>
-                    <td className="p-4">
+                    <td className="font-medium p-4 text-center">{user.full_name}</td>
+                    <td className="p-4 text-center">{user.email}</td>
+                    <td className="p-4 text-center">
                       <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
                         user.role === 'administrador' 
                           ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
@@ -74,7 +74,7 @@ export default function UserListAndForm({ users }) {
                         {user.role}
                       </span>
                     </td>
-                    <td className="flex items-center space-x-2 p-4">
+                    <td className="flex items-center justify-center space-x-2 p-4">
                       <button
                         onClick={() => handleEditClick(user)}
                         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors duration-200 cursor-pointer"

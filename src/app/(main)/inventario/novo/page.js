@@ -111,7 +111,7 @@ export default function NovoInventario() {
         <div className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-center">
           <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload do Estoque Base (.xlsx)</label>
           <input id="file-upload" type="file" accept=".xlsx, .csv" onChange={handleFileUpload} className="text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-800"/>
-          <button onClick={handleFileDownload} className="mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+          <button onClick={handleFileDownload} className="mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
             Baixar planilha modelo
           </button>
         </div>

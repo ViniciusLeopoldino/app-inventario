@@ -24,7 +24,7 @@ export default async function Navbar() {
     <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white shadow-md z-30">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
         <Link href="/" className="text-xl font-bold">
-          Inv. App
+          Aplicação de Inventário
         </Link>
 
         {/* Menu para Telas Grandes (Desktop) */}
