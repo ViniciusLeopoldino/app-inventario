@@ -99,7 +99,7 @@ export default function Dashboard() {
           <h2 className="text-5xl text-center font-extrabold text-blue-500">{stats.emAndamento}</h2>
           <p className="mt-2 text-lg text-center font-medium text-gray-600 dark:text-gray-300">Inventários em Andamento</p>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col justify-center items-center">
           <h2 className="text-5xl text-center font-extrabold text-green-600">{stats.concluidos}</h2>
           <p className="mt-2 text-lg text-center font-medium text-gray-600 dark:text-gray-300">Concluídos (Total)</p>
@@ -123,13 +123,32 @@ export default function Dashboard() {
           </div>
 
           <div className="text-center flex-grow flex flex-col justify-center">
+            {(() => {
+              // determinando qual valor de perda está ativo
+              const currentLossValue = lossType === 'latest' ? latestLossValue : totalLossValue;
+
+              // renderizando o h2 com a classe de cor condicional (verde = 0,00 e vermelho <> 0,00)
+              return (
+                <h2 className={`text-5xl font-extrabold transition-colors duration-300 ${currentLossValue === 0 ? 'text-green-600' : 'text-red-500'
+                  }`}>
+                  {currentLossValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                </h2>
+              );
+            })()}
+
+            <p className="mt-2 text-lg font-medium text-gray-600 dark:text-gray-300">
+              {lossType === 'latest' ? 'Perdas (Último Inventário)' : 'Perdas (Total)'}
+            </p>
+          </div>
+
+          {/* <div className="text-center flex-grow flex flex-col justify-center">
             <h2 className="text-5xl font-extrabold text-red-500">
               {(lossType === 'latest' ? latestLossValue : totalLossValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </h2>
             <p className="mt-2 text-lg font-medium text-gray-600 dark:text-gray-300">
               {lossType === 'latest' ? 'Perdas (Último Inventário)' : 'Perdas (Total)'}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -153,8 +172,8 @@ export default function Dashboard() {
                     </p>
                   </div>
                   <span className={`px-2 py-1 text-xs font-semibold rounded-full ${item.status === 'concluido'
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                      : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
                     }`}>
                     {item.status === 'concluido' ? 'Concluído' : 'Em Andamento'}
                   </span>
