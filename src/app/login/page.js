@@ -12,7 +12,7 @@ const initialState = {
 function LoginButton() {
   const { pending } = useFormStatus()
   return (
-    <button type="submit" aria-disabled={pending} className="btn btn-primary w-full text-white">
+    <button type="submit" aria-disabled={pending} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer w-full disabled:opacity-50">
       {pending ? 'Entrando...' : 'Entrar'}
     </button>
   )
@@ -47,7 +47,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               required
-              className="input input-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600"
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           
@@ -58,7 +58,7 @@ export default function LoginPage() {
               name="password"
               type="password"
               required
-              className="input input-bordered w-full mt-1 dark:bg-gray-700 dark:border-gray-600"
+              className="mt-1 w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           
@@ -71,11 +71,11 @@ export default function LoginPage() {
           )}
         </form>
 
-        <div className="divider dark:text-gray-400 my-6">OU</div>
+        <div className="text-center divider dark:text-gray-400 my-6">OU</div>
 
         <button 
           onClick={handleGitHubLogin} 
-          className="btn btn-outline w-full dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer w-full disabled:opacity-50"
         >
           Entrar com GitHub
         </button>

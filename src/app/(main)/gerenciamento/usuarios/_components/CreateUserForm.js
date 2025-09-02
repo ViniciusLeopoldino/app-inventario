@@ -45,8 +45,8 @@ export default function CreateUserForm({ onClose }) {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         
-        <h3 id="create-modal-title" className="font-bold text-xl dark:text-white">Cadastrar Novo Usuário</h3>
-        <p className="py-2 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <h3 id="create-modal-title" className="font-bold text-xl text-center dark:text-white">Cadastrar Novo Usuário</h3>
+        <p className="py-2 text-sm text-center text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 mb-6">
           O novo usuário receberá um email para definir a senha.
         </p>
         
