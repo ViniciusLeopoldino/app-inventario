@@ -6,7 +6,6 @@ import EditUserModal from './EditUserModal'
 import { deleteUser } from '@/actions'
 
 export default function UserListAndForm({ users }) {
-  // Estado para controlar o modal de criação
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState(null)
@@ -32,17 +31,15 @@ export default function UserListAndForm({ users }) {
 
   return (
     <>
-      {/* Renderização condicional dos modais */}
       {isCreateModalOpen && <CreateUserForm onClose={() => setIsCreateModalOpen(false)} />}
       {isEditModalOpen && selectedUser && <EditUserModal user={selectedUser} onClose={() => setIsEditModalOpen(false)} />}
 
       <div className="space-y-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Gerenciamento de Usuários</h1>
-          {/* Botão agora abre o modal de criação */}
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="btn btn-primary text-white"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer"
           >
             Cadastrar Novo Usuário
           </button>
@@ -51,13 +48,13 @@ export default function UserListAndForm({ users }) {
         <div className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">Usuários Cadastrados</h2>
           <div className="overflow-x-auto">
-            <table className="table w-full">
+            <table className="w-full text-left">
               <thead className="text-gray-700 dark:text-gray-300">
-                <tr>
-                  <th className="text-left p-4">Nome Completo</th>
-                  <th className="text-left p-4">Email</th>
-                  <th className="text-left p-4">Perfil</th>
-                  <th className="text-left p-4">Ações</th>
+                <tr className="border-b dark:border-gray-700">
+                  <th className="p-4">Nome Completo</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Perfil</th>
+                  <th className="p-4">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -69,27 +66,27 @@ export default function UserListAndForm({ users }) {
                     <td className="font-medium p-4">{user.full_name}</td>
                     <td className="p-4">{user.email}</td>
                     <td className="p-4">
-                      <span className={`badge ${user.role === 'administrador' ? 'badge-primary' : 'badge-ghost'}`}>
+                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        user.role === 'administrador' 
+                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                          : 'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
+                      }`}>
                         {user.role}
                       </span>
                     </td>
                     <td className="flex items-center space-x-2 p-4">
                       <button
                         onClick={() => handleEditClick(user)}
-                        className="btn btn-sm btn-info text-white"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors duration-200 cursor-pointer"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDeleteClick(user.id, user.full_name)}
                         disabled={isPending}
-                        className="btn btn-sm btn-error text-white"
+                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isPending ? (
-                          <span className="loading loading-spinner loading-xs"></span>
-                        ) : (
-                          'Excluir'
-                        )}
+                        {isPending ? '...' : 'Excluir'}
                       </button>
                     </td>
                   </tr>
