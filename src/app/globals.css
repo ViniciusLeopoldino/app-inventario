@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {/* 1. Diretivas Essenciais do Tailwind CSS */
+/* Estas três linhas DEVEM vir primeiro. Elas injetam os estilos base do Tailwind. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 2. Definição de Variáveis de Cor Globais (Theming) */
+/* Usamos o formato --x-rgb para que possamos usar as cores com opacidade depois, se quisermos. */
+:root {
+  /* Tema Claro (Padrão) */
+  --foreground-rgb: 23, 23, 23;      /* Cor do texto: quase preto */
+  --background-rgb: 255, 255, 255;   /* Cor de fundo: branco */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Tema Escuro */
+    --foreground-rgb: 237, 237, 237; /* Cor do texto: quase branco */
+    --background-rgb: 10, 10, 10;      /* Cor de fundo: quase preto */
+  }
+}
+
+/* 3. Estilos Globais para o Body */
+/* Aplicamos as variáveis que definimos acima. */
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-rgb));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+    color: rgb(var(--foreground-rgb));
+
+}
