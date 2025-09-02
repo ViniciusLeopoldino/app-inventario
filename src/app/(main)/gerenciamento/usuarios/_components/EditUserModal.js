@@ -1,9 +1,10 @@
 // app/(main)/gerenciamento/usuarios/_components/EditUserModal.js
 'use client'
 
-import { useActionState, useFormStatus } from 'react'
+// AQUI ESTÁ A CORREÇÃO: Importamos cada hook da sua fonte correta.
+import { useActionState, useEffect } from 'react'
+import { useFormStatus } from 'react-dom'
 import { updateUserProfile } from '@/actions'
-import { useEffect, useRef } from 'react'
 
 const initialState = {
   message: null,
@@ -13,29 +14,46 @@ function SubmitButton() {
   const { pending } = useFormStatus()
   return (
     <button type="submit" aria-disabled={pending} className="btn btn-primary text-white">
-      {pending ? 'Salvando...' : 'Salvar Alterações'}
+      {pending ? (
+        <>
+          <span className="loading loading-spinner loading-sm"></span>
+          Salvando...
+        </>
+      ) : (
+        'Salvar Alterações'
+      )}
     </button>
   )
 }
 
 export default function EditUserModal({ user, onClose }) {
   const [state, formAction] = useActionState(updateUserProfile, initialState)
-  const dialogRef = useRef(null)
-
-  // Controla a exibição do modal e fecha se a ação for bem-sucedida
+  
   useEffect(() => {
     if (state?.message === 'Perfil atualizado com sucesso!') {
-      onClose()
+      setTimeout(() => {
+        onClose()
+      }, 1500);
     }
   }, [state, onClose])
 
   return (
-    <dialog ref={dialogRef} open className="modal modal-bottom sm:modal-middle">
-      <div className="modal-box dark:bg-gray-800">
-        <h3 className="font-bold text-lg dark:text-white">Editar Usuário</h3>
-        <p className="py-2 text-sm text-gray-500 dark:text-gray-400">Editando perfil de: {user.email}</p>
+    <div 
+      className="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 flex items-center justify-center p-4"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="absolute inset-0" onClick={onClose}></div>
+      <div className="relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8">
+        <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         
-        <form action={formAction} className="space-y-4 mt-4">
+        <h3 id="modal-title" className="font-bold text-xl dark:text-white">Editar Usuário</h3>
+        <p className="py-2 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 mb-6">
+          {user.email}
+        </p>
+        
+        <form action={formAction} className="space-y-4">
           <input type="hidden" name="id" value={user.id} />
           
           <div>
@@ -64,16 +82,19 @@ export default function EditUserModal({ user, onClose }) {
             </select>
           </div>
 
-          <div className="modal-action">
-            <button type="button" onClick={onClose} className="btn">Cancelar</button>
+          {state?.message && (
+            <div className={`text-center p-2 rounded-md bg-opacity-20 text-sm
+              ${state.message.startsWith('Erro') ? 'bg-red-500 text-red-700 dark:text-red-300' : 'bg-green-500 text-green-700 dark:text-green-300'}`}>
+              {state.message}
+            </div>
+          )}
+
+          <div className="flex justify-end items-center space-x-4 pt-4">
+            <button type="button" onClick={onClose} className="btn btn-ghost">Cancelar</button>
             <SubmitButton />
           </div>
-
-          {state?.message && (
-            <p className="text-sm text-center text-green-500">{state.message}</p>
-          )}
         </form>
       </div>
-    </dialog>
+    </div>
   )
 }
