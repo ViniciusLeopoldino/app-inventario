@@ -10,9 +10,9 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const supabase = createClient();
 
 export default function Dashboard() {
-  
+
   const [stats, setStats] = useState({ emAndamento: 0, concluidos: 0 });
-  
+
   // Estados para gerenciar as perdas
   const [latestLossValue, setLatestLossValue] = useState(0);
   const [totalLossValue, setTotalLossValue] = useState(0);
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
       if (allCompletedInventories && allCompletedInventories.length > 0) {
         const latestInventory = allCompletedInventories[0];
-        
+
         if (latestInventory.result_data) {
           const latestLoss = latestInventory.result_data.reduce((acc, item) => {
             if (item.Diferenca < 0) return acc + (item.Diferenca * (item.ValorUnitario || 0));
@@ -92,35 +92,36 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Dashboard</h1>
-      
+
       {/* Cards de Status */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-          <h2 className="text-5xl font-extrabold text-blue-500">{stats.emAndamento}</h2>
-          <p className="mt-2 text-lg font-medium text-gray-600 dark:text-gray-300">Inventários em Andamento</p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-          <h2 className="text-5xl font-extrabold text-green-600">{stats.concluidos}</h2>
-          <p className="mt-2 text-lg font-medium text-gray-600 dark:text-gray-300">Concluídos (Total)</p>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col justify-center items-center">
+          <h2 className="text-5xl text-center font-extrabold text-blue-500">{stats.emAndamento}</h2>
+          <p className="mt-2 text-lg text-center font-medium text-gray-600 dark:text-gray-300">Inventários em Andamento</p>
         </div>
         
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col justify-center items-center">
+          <h2 className="text-5xl text-center font-extrabold text-green-600">{stats.concluidos}</h2>
+          <p className="mt-2 text-lg text-center font-medium text-gray-600 dark:text-gray-300">Concluídos (Total)</p>
+        </div>
+
         {/* Card de Perdas com o Seletor */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col">
           <div className="flex justify-center mb-4 bg-gray-100 dark:bg-gray-700 rounded-full p-1 text-sm font-semibold">
             <button
               onClick={() => setLossType('latest')}
-              className={`w-1/2 py-1 rounded-full transition-colors duration-300 ${lossType === 'latest' ? 'bg-white dark:bg-gray-900 shadow text-gray-800 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
+              className={`w-1/2 py-1 cursor-pointer rounded-full transition-colors duration-300 ${lossType === 'latest' ? 'bg-white dark:bg-gray-900 shadow text-gray-800 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
             >
               Última
             </button>
             <button
               onClick={() => setLossType('total')}
-              className={`w-1/2 py-1 rounded-full transition-colors duration-300 ${lossType === 'total' ? 'bg-white dark:bg-gray-900 shadow text-gray-800 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
+              className={`w-1/2 py-1 cursor-pointer rounded-full transition-colors duration-300 ${lossType === 'total' ? 'bg-white dark:bg-gray-900 shadow text-gray-800 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
             >
               Total
             </button>
           </div>
-          
+
           <div className="text-center flex-grow flex flex-col justify-center">
             <h2 className="text-5xl font-extrabold text-red-500">
               {(lossType === 'latest' ? latestLossValue : totalLossValue).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
@@ -138,7 +139,7 @@ export default function Dashboard() {
           <h3 className="font-bold text-xl mb-4 text-gray-700 dark:text-gray-200">Visão Geral</h3>
           <div className="h-64"><Bar data={chartData} options={{ maintainAspectRatio: false }} /></div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
           <h3 className="font-bold text-xl mb-4 text-gray-700 dark:text-gray-200">Atividade Recente</h3>
           <div className="space-y-4">
@@ -151,11 +152,10 @@ export default function Dashboard() {
                       {item.responsible} - {new Date(item.created_at).toLocaleDateString('pt-BR')}
                     </p>
                   </div>
-                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                    item.status === 'concluido' 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${item.status === 'concluido'
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                       : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                  }`}>
+                    }`}>
                     {item.status === 'concluido' ? 'Concluído' : 'Em Andamento'}
                   </span>
                 </div>
